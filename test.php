@@ -130,10 +130,12 @@
                 // 마커를 표시할 위치와 내용을 가지고 있는 객체 배열입니다
 
                 var positions = [
+                    // #0
                     {   
                         content: "제 12호 자투리 주차장",
                         latlng: new kakao.maps.LatLng(37.24804865875466, 127.01545563379784),
                     },
+                    // #1
                     {   
                         content: '<div class="wrap">' + 
                                 '    <div class="info">' + 
@@ -145,18 +147,33 @@
                                 '                <img src="/img/test.gif" width="200" height="200">' +
                                 '           </div>' + 
                                 '            <div class="title">' + 
-                                '                <div class="ellipsis">32-951 ~ 32-985 (6대)</div>' + 
+                                '                <div class="ellipsis">32-951 ~ 32-985 (35대)</div>' + 
                                 '            </div>' + 
                                 '        </div>' + 
                                 '    </div>' +    
                                 '</div>',
                         latlng: new kakao.maps.LatLng(37.24754865875466, 127.01545563379784),
                     },
+                    // #2
                     {   
                         content: "미영아파트 주차장",
                         latlng: new kakao.maps.LatLng(37.24754865875466, 127.01458593379784),
-                    }
-                    
+                    },
+                    // #3
+                    {   
+                        content: "주차장1",
+                        latlng: new kakao.maps.LatLng(37.25040007017113, 127.0177019705559),
+                    },
+                    // #4
+                    {   
+                        content: "주차장2",
+                        latlng: new kakao.maps.LatLng(37.247293986252004, 127.01581615448784),
+                    },
+                    // #5
+                    {   
+                        content: "주차장3",
+                        latlng: new kakao.maps.LatLng(37.24672403557383, 127.0161118992067),
+                    },
                 ];
 
 
