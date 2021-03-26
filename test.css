@@ -1,11 +1,45 @@
-.box1 {
-    width: 100%;
-    height: 30px;
-    color: black;
+.main {
+    position: relative;
+    width: 1027px;
+    margin-left: 210px;
+    padding-left: 30px;
+    padding-top: 20px;
+}
+div {
+    display: block;
+}
+.sidebar {
+    width: 210px;
+    height: auto;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 1000;
+    display: block;
+    overflow: hidden;
+    background-color: #004c92;
+    color: white;
+}
+.title{
+    display: block;
     text-align: center;
-    font-size: 20pt;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.git{
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    padding-left: 15px;
+    padding-bottom: 15px;
+    text-align: center;
+    -webkit-text-emphasis: open;
+
 }
 #map {
-    width: 100%;
-    height: 500px;
+    width: 87%;
+    height: 80%;
+    display: block;
+    position: fixed;
 }
