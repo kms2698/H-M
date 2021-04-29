@@ -92,11 +92,11 @@
                     displayMarker(locPosition, message);
                 }
 
-                // 지도에 마커와 인포윈도우를 표시하는 함수입니다
+                
                 function displayMarker(locPosition, message) {
-                    // 내위치 마커만 특별하게
-                    var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
-                    var imageSize = new kakao.maps.Size(24, 35);
+                    // 현재위치 마커
+                    var imageSrc = "/img/location.png"; 
+                    var imageSize = new kakao.maps.Size(64, 64);
                     var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize)
 
                     // 마커를 생성합니다
@@ -161,22 +161,70 @@
                     },
                     // #3
                     {   
-                        content: "주차장1",
+                        content: "세류 고가 3주차장",
                         latlng: new kakao.maps.LatLng(37.25040007017113, 127.0177019705559),
                     },
                     // #4
                     {   
-                        content: "주차장2",
+                        content: "거주자 우선 주차(유료)2",
                         latlng: new kakao.maps.LatLng(37.247293986252004, 127.01581615448784),
                     },
                     // #5
                     {   
-                        content: "주차장3",
+                        content: "거주자 우선 주차(유료)3",
                         latlng: new kakao.maps.LatLng(37.24672403557383, 127.0161118992067),
                     },
+                    // 한양대학교 ERICA 주차장 
+                    {   
+                        content: "주차장1",
+                        latlng: new kakao.maps.LatLng(37.29426573238396, 126.83147717269108),
+                    },
+
+                    {   
+                        content: "주차장2",
+                        latlng: new kakao.maps.LatLng(37.296057425273325, 126.83530499416962),
+                    },
+
+                    {   
+                        content: "주차장3",
+                        latlng: new kakao.maps.LatLng(37.29319370562554, 126.83644184853115),
+                    },
+
+                    {   
+                        content: "주차장4",
+                        latlng: new kakao.maps.LatLng(37.2972307337403, 126.8383617353502),
+                    },
+
+                    {   
+                        content: "주차장5",
+                        latlng: new kakao.maps.LatLng(37.2978835512855, 126.83804453707344),
+                    },
+
+                    {   
+                        content: "주차장6",
+                        latlng: new kakao.maps.LatLng(37.29937902716941, 126.83786650853243),
+                    },
+
+                    {   
+                        content: "주차장7",
+                        latlng: new kakao.maps.LatLng(37.29654019433495, 126.84244882057581),
+                    },
+                    // 한양대학교 ERICA 외부 주자창
+                    {   
+                        content: "안산교통정보센터주차장",
+                        latlng: new kakao.maps.LatLng(37.29654019433495, 126.84244882057581),
+                    },
+                    {   
+                        content: "상록구청주차장",
+                        latlng: new kakao.maps.LatLng(37.300250220584346, 126.84587834962909),
+                    },
+
                 ];
+                // 마커 이미지 추가 /Red/Green 상황에 따라 변화 예정
+                var imageSrc = '/img/red.png',
+                    imageSize = new kakao.maps.Size(65, 65);
 
-
+                var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
                 ////////////////////////////////////
                 for (var i = 0; i < positions.length; i++) {
                     // 마커를 생성합니다   
@@ -184,6 +232,7 @@
                         map: map, // 마커를 표시할 지도
                         position: positions[i].latlng, // 마커의 위치
                         clickable: true, // 마커를 클릭했을 때 지도의 클릭 이벤트가 발생하지 않도록 설정합니다
+                        image: markerImage
 
                     });
 
