@@ -95,7 +95,7 @@
                 
                 function displayMarker(locPosition, message) {
                     // 현재위치 마커
-                    var imageSrc = "/img/location.png"; 
+                    var imageSrc = "/img/now.png"; 
                     var imageSize = new kakao.maps.Size(64, 64);
                     var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize)
 
