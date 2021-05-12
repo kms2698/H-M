@@ -5,9 +5,6 @@
     padding-left: 30px;
     padding-top: 20px;
 }
-div {
-    display: block;
-}
 .sidebar {
     width: 210px;
     height: auto;
@@ -42,6 +39,9 @@ div {
     height: 100%;
     display: block;
     position: fixed;
+}
+.table {
+    float: right;
 }
 
 /* .label {margin-bottom: 96px;} */
