@@ -1,0 +1,70 @@
+html,body {
+    height: 100%;
+    margin: 0;
+}
+.box-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+.box1 {
+    background-color: #004c92;
+    width: 12%;
+    height: 100%;
+}
+.title {
+    text-align: center;
+    color: #fff;
+}
+.git{
+    color: #fff;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    padding-left: 15px;
+    padding-bottom: 15px;
+    text-align: center;
+
+}
+.box2 {
+    width: 65%;
+    height: 100%;
+}
+#map {
+    margin-left: 5px;
+    margin-top: 20px;
+    width: 100%;
+    height: 95%;
+    box-shadow: 0 1px 11px 0 rgba(0, 0, 0, 0.12);
+}
+.box3 {
+    width: 23%;
+}
+.card{
+    margin-top: 15px;
+    margin-left: 10px;
+    margin-right: 10px;
+    border-radius: 5px;
+    box-shadow: 0 1px 11px 0 rgba(0, 0, 0, 0.12);
+    text-align: center;
+    vertical-align: middle;
+
+}
+.block{
+    display: flex;
+}
+.header{
+    background-color: #004c92;
+    color: #fff;
+    height: 50px;
+}
+.total-block{
+    width: 50%;
+    border-right: 1px solid #e0e0e0;
+}
+.recent-block{
+    width: 50%;
+}
+.h2{
+    line-height: 1.1;
+}
