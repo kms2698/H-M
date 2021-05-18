@@ -1,10 +1,3 @@
-<!-- <?php
-            $conn = mysqli_connect("localhost","root",1234,'study');
-	        $sql="SELECT * FROM food";
-            $result=mysqli_query($conn,$sql);
-            $board=mysqli_fetch_array($result);
-            echo $board['fo_kind'];
-?> -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,81 +25,53 @@
                 Github
             </div>
         </div>
-        <div class="box2">
+        <div class="box2">     
             <div id="map"></div>
         </div>
         <div class="box3">
-            <div class="card">
-                <div class="header">
-                    <h2>한양대학교 ERICA 1주차장</h2>
-                </div>
-                <div class="block">
-                    <div class="total-block">
-                        <div>
-                            <h2>40</h2>
-                        </div>
-                        <div>
-                            <h5>전체공간</h5>
-                        </div>
-                    </div>
-                    <div class="recent-block">
-                        <div>
-                            <h2>12</h2>
-                        </div>
-                        <div>
-                            <h5>남은공간</h5>
-                        </div>
-                    </div>
-                </div>  
-            </div>
-
-            <div class="card">
-                <div class="header">
-                    <h2>한양대학교 ERICA 2주차장</h2>
-                </div>
-                <div class="block">
-                    <div class="total-block">
-                        <div>
-                            <h2>20</h2>
-                        </div>
-                        <div>
-                            <h5>전체공간</h5>
-                        </div>
-                    </div>
-                    <div class="recent-block">
-                        <div>
-                            <h2>1</h2>
-                        </div>
-                        <div>
-                            <h5>남은공간</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="header">
-                    <h2>한양대학교 ERICA 3주차장</h2>
-                </div>
-                <div class="block">
-                    <div class="total-block">
-                        <div>
-                            <h2>18</h2>
-                        </div>
-                        <div>
-                            <h5>전체공간</h5>
-                        </div>
-                    </div>
-                    <div class="recent-block">
-                        <div>
-                            <h2>12</h2>
-                        </div>
-                        <div>
-                            <h5>남은공간</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <?php
+            echo '<input type="checkbox" name="xxx" value="yyy" checked>' ; 
+            
+                $conn = mysqli_connect("localhost","root",root,'hm');
+                if (mysqli_connect_errno()){
+                    echo "연결실패" . mysqli_connect_error();
+                }
+                $result = mysqli_query($conn,"SELECT * FROM parkinglot");
+                $n = 1;
+                while($row = mysqli_fetch_array($result)){
+                    # 여기에서 현재 좌표랑 지금 받아오는 좌표랑 거리계산을해서 밑에 이프문에서 걸러주면 되겠네 
+                    // if($n > 3){
+                    //     $xx = '<script>document.write (locPosition);</script>';
+                    //     echo $xx;
+                    // }
+                    echo '<div class="card">';
+                    echo     '<div class="header">';
+                    echo         '<h2>' . $row['name'] . '</h2>';
+                    echo     '</div>';
+                    echo     '<div class="block">';
+                    echo         '<div class="total-block">';
+                    echo             '<div>';
+                    echo                 '<h2>'. $row['total_space'] .'</h2>';
+                    echo             '</div>';
+                    echo             '<div>';
+                    echo                 '<h5>전체공간</h5>';
+                    echo             '</div>';
+                    echo         '</div>';
+                    echo         '<div class="recent-block">';
+                    echo             '<div>';
+                    echo                 '<h2>'. $row['empty_space'] .'</h2>';
+                    echo             '</div>';
+                    echo             '<div>';
+                    echo                 '<h5>남은공간</h5>';
+                    echo             '</div>';
+                    echo         '</div>';
+                    echo     '</div>';  
+                    echo '</div>';
+                    $n++;
+                }
+            mysqli_close($conn);
+            ?>
+            
             
         </div>
     </div>
@@ -114,7 +79,7 @@
 <!-- 민상 api -->
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8a22c92620ce18ced038eefd01097d13"></script>
 <!-- 효원 api -->
-<!-- <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=3d2fabc7ec0731f1ea29ad9dd9a67198"></script> -->
+<!-- <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2ce674d31d7a0ac54f9b679b2e14b77b"></script> -->
 <script>
     var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
         mapOption = {
@@ -134,16 +99,18 @@
 
             var lat = position.coords.latitude, // 위도
                 lon = position.coords.longitude; // 경도
-
             var locPosition = new kakao.maps.LatLng(lat, lon); // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
-
+            
+            
             // 마커와 인포윈도우를 표시합니다
             displayMarker(locPosition, message);
-
+            <?php
+            $value = 200;
+            ?>
             var circle = new kakao.maps.Circle({
 
                 center: new kakao.maps.LatLng(lat, lon),  // 원의 중심좌표 입니다 
-                radius: 100, // 미터 단위의 원의 반지름입니다 
+                radius: "<?php echo $value; ?>", // 미터 단위의 원의 반지름입니다 
                 strokeWeight: 5, // 선의 두께입니다 
                 strokeColor: '#75B8FA', // 선의 색깔입니다
                 strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
@@ -277,13 +244,6 @@
             content: "상록구청주차장",
             latlng: new kakao.maps.LatLng(37.300250220584346, 126.84587834962909),
         },
-
-        // 집에서 테스트용
-        // {   
-        //     content: "테스트",
-        //     latlng: new kakao.maps.LatLng(37.44942392756917, 126.68314181506508),
-        // },
-
     ];
     // 마커 이미지 추가 /Red/Green 상황에 따라 변화 예정
     var imageSrc = '/img/red.png',

@@ -1,3 +1,10 @@
+/* Layout  
+box1        box2        box3
+    title       map         card
+    git                     block
+                            header
+                            total-block, recent-block
+*/
 html,body {
     height: 100%;
     margin: 0;
