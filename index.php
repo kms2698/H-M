@@ -29,9 +29,26 @@
             <div id="map"></div>
         </div>
         <div class="box3">
+            <form action="" method="post">
+            <select name="radius">
+                <option value=50>반경 선택(m단위)</option>
+                <option value=50>50m</option>
+                <option value=100>100m</option>
+                <option value=200>200m</option>
+                <option value=400>400m</option>
+            </select>
+
+            <input type="submit" name="submit" value="Select radius">
+            </form>
             <?php
-            echo '<input type="checkbox" name="xxx" value="yyy" checked>' ; 
-            
+            if(isset($_POST['radius'])){
+                if(!empty($_POST['radius'])) {
+                    $selected = $_POST['radius'];
+                } else {
+                }
+            }
+            ?>
+            <?php
                 $conn = mysqli_connect("localhost","root",root,'hm');
                 if (mysqli_connect_errno()){
                     echo "연결실패" . mysqli_connect_error();
@@ -69,10 +86,8 @@
                     echo '</div>';
                     $n++;
                 }
-            mysqli_close($conn);
+            // mysqli_close($conn);
             ?>
-            
-            
         </div>
     </div>
 <!-- body 끝 script 시작 -->
@@ -104,13 +119,10 @@
             
             // 마커와 인포윈도우를 표시합니다
             displayMarker(locPosition, message);
-            <?php
-            $value = 200;
-            ?>
             var circle = new kakao.maps.Circle({
 
                 center: new kakao.maps.LatLng(lat, lon),  // 원의 중심좌표 입니다 
-                radius: "<?php echo $value; ?>", // 미터 단위의 원의 반지름입니다 
+                radius: "<?php echo $selected; ?>", // 미터 단위의 원의 반지름입니다 
                 strokeWeight: 5, // 선의 두께입니다 
                 strokeColor: '#75B8FA', // 선의 색깔입니다
                 strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
@@ -131,7 +143,6 @@
         displayMarker(locPosition, message);
     }
 
-
     function displayMarker(locPosition, message) {
         // 현재위치 마커
         var imageSrc = "/img/now.png";
@@ -150,100 +161,20 @@
 
     }
     /* ---------------------------------------------------*/
-
-
-
-    // 마커를 표시할 위치와 내용을 가지고 있는 객체 배열입니다
-
+    // 마커 위치와 배열
     var positions = [
-        // #0
-        {
-            content: "제 12호 자투리 주차장",
-            latlng: new kakao.maps.LatLng(37.24804865875466, 127.01545563379784),
-        },
-        // #1
-        {
-            content: '<div class="wrap">' +
-                '    <div class="info">' +
-                '        <div class="title">' +
-                '            거주자 우선 주차(유료)' +
-                '        </div>' +
-                '        <div class="body">' +
-                '            <div class="img">' +
-                '                <img src="/img/test.gif" width="200" height="200">' +
-                '           </div>' +
-                '            <div class="title">' +
-                '                <div class="ellipsis">32-951 ~ 32-985 (35대)</div>' +
-                '            </div>' +
-                '        </div>' +
-                '    </div>' +
-                '</div>',
-            latlng: new kakao.maps.LatLng(37.24754865875466, 127.01545563379784),
-        },
-        // #2
-        {
-            content: "미영아파트 주차장",
-            latlng: new kakao.maps.LatLng(37.24754865875466, 127.01458593379784),
-        },
-        // #3
-        {
-            content: "세류 고가 3주차장",
-            latlng: new kakao.maps.LatLng(37.25040007017113, 127.0177019705559),
-        },
-        // #4
-        {
-            content: "거주자 우선 주차(유료)2",
-            latlng: new kakao.maps.LatLng(37.247293986252004, 127.01581615448784),
-        },
-        // #5
-        {
-            content: "거주자 우선 주차(유료)3",
-            latlng: new kakao.maps.LatLng(37.24672403557383, 127.0161118992067),
-        },
-        // 한양대학교 ERICA 주차장 
-        {
-            content: "주차장1",
-            latlng: new kakao.maps.LatLng(37.29426573238396, 126.83147717269108),
-        },
-
-        {
-            content: "주차장2",
-            latlng: new kakao.maps.LatLng(37.296057425273325, 126.83530499416962),
-        },
-
-        {
-            content: "주차장3",
-            latlng: new kakao.maps.LatLng(37.29319370562554, 126.83644184853115),
-        },
-
-        {
-            content: "주차장4",
-            latlng: new kakao.maps.LatLng(37.2972307337403, 126.8383617353502),
-        },
-
-        {
-            content: "주차장5",
-            latlng: new kakao.maps.LatLng(37.2978835512855, 126.83804453707344),
-        },
-
-        {
-            content: "주차장6",
-            latlng: new kakao.maps.LatLng(37.29937902716941, 126.83786650853243),
-        },
-
-        {
-            content: "주차장7",
-            latlng: new kakao.maps.LatLng(37.29654019433495, 126.84244882057581),
-        },
-        // 한양대학교 ERICA 외부 주자창
-        {
-            content: "안산교통정보센터주차장",
-            latlng: new kakao.maps.LatLng(37.29654019433495, 126.84244882057581),
-        },
-        {
-            content: "상록구청주차장",
-            latlng: new kakao.maps.LatLng(37.300250220584346, 126.84587834962909),
-        },
+        <?php
+            $result = mysqli_query($conn,"SELECT * FROM parkinglot");
+            $n = 1;
+            while($row = mysqli_fetch_array($result)){
+                echo '{';
+                echo    'content: "' . $row['name'] . '",';
+                echo    'latlng: new kakao.maps.LatLng(' . $row['x'] . ',' . $row['y'] . '),';
+                echo '},';
+                $n++;
+            }
+            mysqli_close($conn);    
+        ?>
     ];
     // 마커 이미지 추가 /Red/Green 상황에 따라 변화 예정
     var imageSrc = '/img/red.png',
@@ -258,7 +189,6 @@
             position: positions[i].latlng, // 마커의 위치
             clickable: true, // 마커를 클릭했을 때 지도의 클릭 이벤트가 발생하지 않도록 설정합니다
             image: markerImage
-
         });
 
         // 마커에 표시할 인포윈도우를 생성합니다 
@@ -278,9 +208,7 @@
         //   open("http://t1.daumcdn.net/friends/prod/editor/dc8b3d02-a15a-4afa-a88b-989cf2a50476.jpg");
 
         // });  
-        kakao.maps.event.addListener(marker, 'click', showPopup());
-
-
+        kakao.maps.event.addListener(marker, 'click', showPopup());       
     }
 
     // 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
@@ -289,7 +217,6 @@
             infowindow.open(map, marker);
         };
     }
-
     // 인포윈도우를 닫는 클로저를 만드는 함수입니다 
     function makeOutListener(infowindow) {
         return function () {
@@ -303,8 +230,6 @@
         };
 
     }
-
-
     // 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
     var mapTypeControl = new kakao.maps.MapTypeControl();
 
@@ -312,10 +237,9 @@
     // kakao.maps.ControlPosition은 컨트롤이 표시될 위치를 정의하는데 TOPRIGHT는 오른쪽 위를 의미합니다
     map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
 
-    // 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
+    // 지도 확대 축소 줌 컨트롤을 생성합니다
     var zoomControl = new kakao.maps.ZoomControl();
     map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
-
 </script>
 
 </body>
