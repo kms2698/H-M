@@ -22,6 +22,12 @@ html,body {
 .title {
     text-align: center;
     color: #fff;
+    overflow: hidden;
+}
+.title img{
+    max-width: 100%;
+    height: auto;
+    display: block;
 }
 .git{
     color: #fff;
