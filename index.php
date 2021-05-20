@@ -13,8 +13,8 @@
     <div class="box-container">
         <div class="box1">
             <div class="title">
-                <a href="/test.php">
-                    <img src="/img/title.png" alt="HM" title="HM" , width=100%, height=90px>
+                <a href="/index.php">
+                    <img src="/img/title.png" alt="HM" title="HM" , width=100%, height=auto>
                 </a>
                 주차장 빈공간 안내 시스템
             </div>
@@ -31,11 +31,12 @@
         <div class="box3">
             <form action="" method="post">
             <select name="radius">
-                <option value=50>반경 선택(m단위)</option>
-                <option value=50>50m</option>
-                <option value=100>100m</option>
-                <option value=200>200m</option>
-                <option value=400>400m</option>
+                <option value=0.05>반경 선택(m단위)</option>
+                <option value=0.05>50m</option>
+                <option value=0.1>100m</option>
+                <option value=0.25>250m</option>
+                <option value=0.5>500m</option>
+                <option value=1>1km</option>
             </select>
 
             <input type="submit" name="submit" value="Select radius">
@@ -47,8 +48,19 @@
                 } else {
                 }
             }
-            ?>
-            <?php
+            
+            function getDistance($lat1, $lng1, $lat2, $lng2)
+            {
+                $earth_radius = 6371;
+                $dLat = deg2rad($lat2 - $lat1);
+                $dLon = deg2rad($lng2 - $lng1);
+                $a = sin($dLat/2) * sin($dLat/2) + cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * sin($dLon/2) * sin($dLon/2);
+                $c = 2 * asin(sqrt($a));
+                $d = $earth_radius * $c;
+                return $d;
+            }
+            
+            
                 $conn = mysqli_connect("localhost","root",root,'hm');
                 if (mysqli_connect_errno()){
                     echo "연결실패" . mysqli_connect_error();
@@ -56,11 +68,9 @@
                 $result = mysqli_query($conn,"SELECT * FROM parkinglot");
                 $n = 1;
                 while($row = mysqli_fetch_array($result)){
-                    # 여기에서 현재 좌표랑 지금 받아오는 좌표랑 거리계산을해서 밑에 이프문에서 걸러주면 되겠네 
-                    // if($n > 3){
-                    //     $xx = '<script>document.write (locPosition);</script>';
-                    //     echo $xx;
-                    // }
+                    if(getDistance($row['x'],$row['y'],37.296352,126.838889) < $selected ) {
+
+                    
                     echo '<div class="card">';
                     echo     '<div class="header">';
                     echo         '<h2>' . $row['name'] . '</h2>';
@@ -84,6 +94,7 @@
                     echo         '</div>';
                     echo     '</div>';  
                     echo '</div>';
+                }
                     $n++;
                 }
             // mysqli_close($conn);
@@ -98,8 +109,8 @@
 <script>
     var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
         mapOption = {
-            center: new kakao.maps.LatLng(37.247577819457305, 127.0157852181996), // 지도의 중심좌표 (집으로 설정함)
-            level: 1 // 지도확대레벨
+            center: new kakao.maps.LatLng(37.296352, 126.838889), // 지도의 중심좌표 (집으로 설정함)
+            level: 3 // 지도확대레벨
         };
 
     // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
@@ -112,8 +123,7 @@
         // GeoLocation을 이용해서 접속 위치를 얻어옵니다
         navigator.geolocation.getCurrentPosition(function (position) {
 
-            var lat = position.coords.latitude, // 위도
-                lon = position.coords.longitude; // 경도
+            var lat = 37.296352, lon = 126.838889; // 위도 경도
             var locPosition = new kakao.maps.LatLng(lat, lon); // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
             
             
@@ -122,7 +132,7 @@
             var circle = new kakao.maps.Circle({
 
                 center: new kakao.maps.LatLng(lat, lon),  // 원의 중심좌표 입니다 
-                radius: "<?php echo $selected; ?>", // 미터 단위의 원의 반지름입니다 
+                radius: "<?php echo 1000*$selected; ?>", // 미터 단위의 원의 반지름입니다 
                 strokeWeight: 5, // 선의 두께입니다 
                 strokeColor: '#75B8FA', // 선의 색깔입니다
                 strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
@@ -137,7 +147,7 @@
         });
 
     } else { // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다 -> 학교 위치로 설정할것임
-        var locPosition = new kakao.maps.LatLng(33.450701, 126.570667),
+        var locPosition = new kakao.maps.LatLng(37.296352, 126.838889),
             message = 'geolocation을 사용할수 없어요..'
 
         displayMarker(locPosition, message);
@@ -170,30 +180,62 @@
                 echo '{';
                 echo    'content: "' . $row['name'] . '",';
                 echo    'latlng: new kakao.maps.LatLng(' . $row['x'] . ',' . $row['y'] . '),';
+                echo    'ratio: "' . $row['full_space']/$row['total_space']  . '",';
                 echo '},';
                 $n++;
             }
-            mysqli_close($conn);    
+            // mysqli_close($conn);    
         ?>
     ];
     // 마커 이미지 추가 /Red/Green 상황에 따라 변화 예정
-    var imageSrc = '/img/red.png',
+    var redimageSrc = '/img/red.png',
+        imageSize = new kakao.maps.Size(65, 65);
+    var greenimageSrc = '/img/green.png',
+        imageSize = new kakao.maps.Size(65, 65);
+    var grayimageSrc = '/img/gray.png',
         imageSize = new kakao.maps.Size(65, 65);
 
-    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
-    ////////////////////////////////////
+    var redmarkerImage = new kakao.maps.MarkerImage(redimageSrc, imageSize);
+    var greenmarkerImage = new kakao.maps.MarkerImage(greenimageSrc, imageSize);
+    var graymarkerImage = new kakao.maps.MarkerImage(grayimageSrc, imageSize);
+
+    var getImageByCondition = (x, y, ratio) => {
+        if(x > y) return graymarkerImage;
+        else {
+            if(ratio < 0.7){
+                return greenmarkerImage;
+            }
+            else return redmarkerImage;
+        }
+    }
+    function getDistanceFromLatLonInKm(lat1,lng1,lat2,lng2) {
+        function deg2rad(deg) {
+            return deg * (Math.PI/180)
+        }
+
+        var R = 6371; // Radius of the earth in km
+        var dLat = deg2rad(lat2-lat1);  // deg2rad below
+        var dLon = deg2rad(lng2-lng1);
+        var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.sin(dLon/2) * Math.sin(dLon/2);
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        var d = R * c; // Distance in km
+        return d;
+    }
+
+
     for (var i = 0; i < positions.length; i++) {
         // 마커를 생성합니다   
         var marker = new kakao.maps.Marker({
             map: map, // 마커를 표시할 지도
             position: positions[i].latlng, // 마커의 위치
             clickable: true, // 마커를 클릭했을 때 지도의 클릭 이벤트가 발생하지 않도록 설정합니다
-            image: markerImage
+            image:  getImageByCondition(getDistanceFromLatLonInKm(positions[i].latlng["La"],positions[i].latlng["Ma"],126.838889,37.296352), <?php echo $selected; ?>,positions[i].ratio),
+  
         });
 
         // 마커에 표시할 인포윈도우를 생성합니다 
         var infowindow = new kakao.maps.InfoWindow({
-            content: positions[i].content // 인포윈도우에 표시할 내용
+            content: '<div style="width:150px;text-align:center;font-size:8px;padding-top:4px;">'+positions[i].content+'</div>' // 인포윈도우에 표시할 내용
         });
 
 
