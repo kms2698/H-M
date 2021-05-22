@@ -7,15 +7,16 @@
     <!-- favicon 추가 -->
     <link rel="shortcut icon" href="/img/favicon-32x32.png">
     <link rel="icon" href="/img/favicon-32x32.png">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
 </head>
 
 <body>
     <div class="box-container">
         <div class="box1">
             <div class="title">
-                <a href="/index.php">
+                <!-- <a href="/index.php"> -->
                     <img src="/img/title.png" alt="HM" title="HM" , width=100%, height=auto>
-                </a>
+                <!-- </a> -->
                 주차장 빈공간 안내 시스템
             </div>
             <div class="git">
@@ -25,42 +26,42 @@
                 Github
             </div>
         </div>
+
         <div class="box2">     
             <div id="map"></div>
         </div>
-        <div class="box3">
-            <form action="" method="post">
-            <select name="radius">
-                <option value=0.05>반경 선택(m단위)</option>
-                <option value=0.05>50m</option>
-                <option value=0.1>100m</option>
-                <option value=0.25>250m</option>
-                <option value=0.5>500m</option>
-                <option value=1>1km</option>
-            </select>
 
-            <input type="submit" name="submit" value="Select radius">
+        <div class="box3">
+            <form class="button" name="form" action="" method="post">
+                <select name="radius" onchange='if(this.value != 0) { this.form.submit(); }'>
+                    <option value=0.05>반경</option>
+                    <option value=0.05>50m</option>
+                    <option value=0.1>100m</option>
+                    <option value=0.25>250m</option>
+                    <option value=0.5>500m</option>
+                    <option value=1>1km</option>
+                </select>
+                <input type="submit" name="submit" value="확인">
             </form>
+            
+            <div class=card_list>
             <?php
-            if(isset($_POST['radius'])){
-                if(!empty($_POST['radius'])) {
-                    $selected = $_POST['radius'];
-                } else {
+                $selected = 100;
+                if(isset($_POST['radius'])){
+                    if(!empty($_POST['radius'])) {
+                        $selected = $_POST['radius'];
+                    } else {
+                    }
                 }
-            }
-            
-            function getDistance($lat1, $lng1, $lat2, $lng2)
-            {
-                $earth_radius = 6371;
-                $dLat = deg2rad($lat2 - $lat1);
-                $dLon = deg2rad($lng2 - $lng1);
-                $a = sin($dLat/2) * sin($dLat/2) + cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * sin($dLon/2) * sin($dLon/2);
-                $c = 2 * asin(sqrt($a));
-                $d = $earth_radius * $c;
-                return $d;
-            }
-            
-            
+                function getDistance($lat1, $lng1, $lat2, $lng2){
+                    $earth_radius = 6371;
+                    $dLat = deg2rad($lat2 - $lat1);
+                    $dLon = deg2rad($lng2 - $lng1);
+                    $a = sin($dLat/2) * sin($dLat/2) + cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * sin($dLon/2) * sin($dLon/2);
+                    $c = 2 * asin(sqrt($a));
+                    $d = $earth_radius * $c;
+                    return $d;
+                }
                 $conn = mysqli_connect("localhost","root",root,'hm');
                 if (mysqli_connect_errno()){
                     echo "연결실패" . mysqli_connect_error();
@@ -68,37 +69,37 @@
                 $result = mysqli_query($conn,"SELECT * FROM parkinglot");
                 $n = 1;
                 while($row = mysqli_fetch_array($result)){
-                    if(getDistance($row['x'],$row['y'],37.296352,126.838889) < $selected ) {
-
+                    if(getDistance($row['x'],$row['y'],37.296352,126.838889) < $selected ){
                     
-                    echo '<div class="card">';
-                    echo     '<div class="header">';
-                    echo         '<h2>' . $row['name'] . '</h2>';
+                    echo    '<div class="card">';
+                    echo        '<div class="header">';
+                    echo             '' . $row['name'] . '';                    
+                    echo         '</div>';
+                    echo         '<div class="block">';
+                    echo             '<div class="total-block">';
+                    echo                 '<div>';
+                    echo                     '<h2>'. $row['total_space'] .'</h2>';
+                    echo                 '</div>';
+                    echo                 '<div>';
+                    echo                     '<h5>전체공간</h5>';
+                    echo                 '</div>';
+                    echo             '</div>';
+                    echo             '<div class="recent-block">';
+                    echo                 '<div>';
+                    echo                     '<h2>'. $row['empty_space'] .'</h2>';
+                    echo                 '</div>';
+                    echo                 '<div>';
+                    echo                     '<h5>남은공간</h5>';
+                    echo                 '</div>';
+                    echo             '</div>';
+                    echo         '</div>';  
                     echo     '</div>';
-                    echo     '<div class="block">';
-                    echo         '<div class="total-block">';
-                    echo             '<div>';
-                    echo                 '<h2>'. $row['total_space'] .'</h2>';
-                    echo             '</div>';
-                    echo             '<div>';
-                    echo                 '<h5>전체공간</h5>';
-                    echo             '</div>';
-                    echo         '</div>';
-                    echo         '<div class="recent-block">';
-                    echo             '<div>';
-                    echo                 '<h2>'. $row['empty_space'] .'</h2>';
-                    echo             '</div>';
-                    echo             '<div>';
-                    echo                 '<h5>남은공간</h5>';
-                    echo             '</div>';
-                    echo         '</div>';
-                    echo     '</div>';  
-                    echo '</div>';
                 }
                     $n++;
                 }
-            // mysqli_close($conn);
-            ?>
+                // mysqli_close($conn);
+                ?>
+            </div>
         </div>
     </div>
 <!-- body 끝 script 시작 -->
@@ -172,7 +173,7 @@
     }
     /* ---------------------------------------------------*/
     // 마커 위치와 배열
-    var positions = [
+    let positions = [
         <?php
             $result = mysqli_query($conn,"SELECT * FROM parkinglot");
             $n = 1;
@@ -222,8 +223,7 @@
         return d;
     }
 
-
-    for (var i = 0; i < positions.length; i++) {
+    for (let i = 0; i < positions.length; i++) {
         // 마커를 생성합니다   
         var marker = new kakao.maps.Marker({
             map: map, // 마커를 표시할 지도
@@ -244,13 +244,11 @@
         // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
         kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
         kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
-        // kakao.maps.event.addListener(marker, 'click', function() {
-        //   // 마커 클릭시 특정 웹사이트 열기
-        //   // 이제 여기에 몇번째 마커인지를 이용해서 우리 이미지도 열 수 있을듯
-        //   open("http://t1.daumcdn.net/friends/prod/editor/dc8b3d02-a15a-4afa-a88b-989cf2a50476.jpg");
-
-        // });  
-        kakao.maps.event.addListener(marker, 'click', showPopup());       
+        kakao.maps.event.addListener(marker, 'click', function() {
+            open('https://map.kakao.com/link/to/'+positions[i].content +',' +  positions[i].latlng['Ma'] + ","+ positions[i].latlng['La']);
+  
+        });  
+        // kakao.maps.event.addListener(marker, 'click', showPopup());       
     }
 
     // 인포윈도우를 표시하는 클로저를 만드는 함수입니다 

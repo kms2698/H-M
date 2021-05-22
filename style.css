@@ -61,7 +61,23 @@ html,body {
     box-shadow: 0 1px 11px 0 rgba(0, 0, 0, 0.12);
     text-align: center;
     vertical-align: middle;
-
+}
+.card_list{
+    overflow: scroll;
+    height: 99%;
+}
+.button{
+    height: 1%;
+    width: auto;
+}
+select{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: url(https://farm1.staticflickr.com/379/19928272501_4ef877c265_t.jpg) no-repeat 90% 50%; /* 네이티브 화살표 대체 */
+    width: 100px;
+    border-radius: 0px;
+    border: 1px solid #999;
 }
 .block{
     display: flex;
@@ -70,6 +86,8 @@ html,body {
     background-color: #004c92;
     color: #fff;
     height: 50px;
+    padding-top: 30px;
+    font-size: 12pt;
 }
 .total-block{
     width: 50%;
