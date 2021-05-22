@@ -29,28 +29,15 @@ html,body {
     height: auto;
     display: block;
 }
-.git img{
-    color: #fff;
-    /* position: absolute; */
-    left: 0;
-    bottom: 0;
-    padding-left: 15px;
-    padding-bottom: 15px;
-    text-align: center;
-    max-width: 100%;
-    height: auto;
-    display: block;
-
-}
 .box2 {
     width: 65%;
     height: 100%;
 }
 #map {
     margin-left: 5px;
-    margin-top: 20px;
+    margin-top: 10px;
     width: 100%;
-    height: 95%;
+    height: 98%;
     box-shadow: 0 1px 11px 0 rgba(0, 0, 0, 0.12);
 }
 .box3 {
@@ -66,12 +53,11 @@ html,body {
     vertical-align: middle;
 }
 .card_list{
-    overflow: scroll;
-    height: 99%;
+    overflow: auto;
+    height: 92%;
 }
 .button{
-    height: 1%;
-    width: auto;
+    height: 5%;
 }
 .block{
     display: flex;
@@ -79,9 +65,15 @@ html,body {
 .header{
     background-color: #004c92;
     color: #fff;
-    height: 50px;
-    padding-top: 30px;
+    height: 100%;
+    padding-top: 35px;
+    padding-bottom: 35px;
     font-size: 12pt;
+    border-radius: 5px 5px 0px 0px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    word-break : nowrap;
 }
 .total-block{
     width: 50%;
@@ -92,4 +84,51 @@ html,body {
 }
 .h2{
     line-height: 1.1;
+}
+select { 
+    width: 48%; 
+    height: 36px;
+    border: 0px solid #ddd;
+    box-shadow: 0 1px 11px 0 rgba(0, 0, 0, 0.12);
+    border-radius: 5px;
+    padding-right: 10px;
+    font-size: 12px;
+}
+select:focus {outline:none;}
+input {
+    width: 48%; 
+    height: 36px;
+    border: 0px solid #ddd;
+    box-shadow: 0 1px 11px 0 rgba(0, 0, 0, 0.12);
+    vertical-align: bottom;
+    background: #5195f7;
+    border-radius: 5px;
+    color: white;
+    font-size: 12px;
+}
+form.button{
+    padding-top: 13px; 
+    padding-left: 10px;
+    /* min-width: 100px */
+}
+@media(min-width: 800px){
+    #example_image_large{
+        display: block;
+    }
+    #example_image_small{
+        display: none;
+    }
+}
+@media(max-width: 800px){
+    #example_image_large{
+        display: none;
+    }
+    #example_image_small{
+        display: block;
+    }
+}
+@media(max-width: 800px){
+    #example_image_large{
+        display: none;
+    }
 }

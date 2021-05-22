@@ -7,7 +7,6 @@
     <!-- favicon 추가 -->
     <link rel="shortcut icon" href="/img/favicon-32x32.png">
     <link rel="icon" href="/img/favicon-32x32.png">
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
 </head>
 
 <body>
@@ -15,15 +14,16 @@
         <div class="box1">
             <div class="title">
                 <!-- <a href="/index.php"> -->
-                    <img src="/img/title.png" alt="HM" title="HM" , width=100%, height=auto>
+                <img id="example_image_large" src="/img/title.png" alt="HM" title="HM" , width=100%, height=auto>
+                <img id="example_image_small" src="/img/logo.png" alt="HM" title="HM" , width=100%, height=auto>
                 <!-- </a> -->
                 <!-- 주차장 빈공간 안내 시스템 -->
-                <img src="/img/title_name.png" alt="HM" title="HM" , width=100%, height=auto>
+                <img id="example_image_large" src="/img/title_name.png" alt="주차장 빈공간 안내 시스템" title="주차장 빈공간 안내 시스템" , width=100%, height=auto>
                 
             </div>
             <div class="git">
                 <a href="https://github.com/kms2698/H-M", target="_blank">
-                    <img src="/img/Github.png" alt="HM" title="HM" , width=100%, height=auto>
+                    <img id="example_image_large" src="/img/Github.png" alt="github" title="Github로 이동" , width=100%, height=auto>
                 </a>
             </div>
         </div>
@@ -34,8 +34,8 @@
 
         <div class="box3">
             <form class="button" name="form" action="" method="post">
-                <select name="radius" onchange='if(this.value != 0) { this.form.submit(); }'>
-                    <option value=0.05>반경</option>
+                <select name="radius">
+                    <option value=0.05>반경입력</option>
                     <option value=0.05>50m</option>
                     <option value=0.1>100m</option>
                     <option value=0.25>250m</option>
@@ -82,7 +82,7 @@
                     echo                     '<h2>'. $row['total_space'] .'</h2>';
                     echo                 '</div>';
                     echo                 '<div>';
-                    echo                     '<h5>전체공간</h5>';
+                    echo                     '<h6>전체공간</h6>';
                     echo                 '</div>';
                     echo             '</div>';
                     echo             '<div class="recent-block">';
@@ -90,7 +90,7 @@
                     echo                     '<h2>'. $row['empty_space'] .'</h2>';
                     echo                 '</div>';
                     echo                 '<div>';
-                    echo                     '<h5>남은공간</h5>';
+                    echo                     '<h6>남은공간</h6>';
                     echo                 '</div>';
                     echo             '</div>';
                     echo         '</div>';  
@@ -177,7 +177,7 @@
     let positions = [
         <?php
             $result = mysqli_query($conn,"SELECT * FROM parkinglot");
-            $n = 1;
+            $n = 0;
             while($row = mysqli_fetch_array($result)){
                 echo '{';
                 echo    'content: "' . $row['name'] . '",';
