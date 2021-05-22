@@ -29,14 +29,17 @@ html,body {
     height: auto;
     display: block;
 }
-.git{
+.git img{
     color: #fff;
-    position: absolute;
+    /* position: absolute; */
     left: 0;
     bottom: 0;
     padding-left: 15px;
     padding-bottom: 15px;
     text-align: center;
+    max-width: 100%;
+    height: auto;
+    display: block;
 
 }
 .box2 {
@@ -69,15 +72,6 @@ html,body {
 .button{
     height: 1%;
     width: auto;
-}
-select{
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    background: url(https://farm1.staticflickr.com/379/19928272501_4ef877c265_t.jpg) no-repeat 90% 50%; /* 네이티브 화살표 대체 */
-    width: 100px;
-    border-radius: 0px;
-    border: 1px solid #999;
 }
 .block{
     display: flex;

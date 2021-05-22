@@ -17,13 +17,14 @@
                 <!-- <a href="/index.php"> -->
                     <img src="/img/title.png" alt="HM" title="HM" , width=100%, height=auto>
                 <!-- </a> -->
-                주차장 빈공간 안내 시스템
+                <!-- 주차장 빈공간 안내 시스템 -->
+                <img src="/img/title_name.png" alt="HM" title="HM" , width=100%, height=auto>
+                
             </div>
             <div class="git">
-                <a href="https://github.com/kms2698/H-M" , target="_blank">
-                    <img src="/img/GitHub-Mark.png" , width=32px, height=32px>
+                <a href="https://github.com/kms2698/H-M", target="_blank">
+                    <img src="/img/Github.png" alt="HM" title="HM" , width=100%, height=auto>
                 </a>
-                Github
             </div>
         </div>
 
