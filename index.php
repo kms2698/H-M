@@ -68,34 +68,33 @@
                     echo "연결실패" . mysqli_connect_error();
                 }
                 $result = mysqli_query($conn,"SELECT * FROM parkinglot");
-                $n = 1;
+                $n = 0;
                 while($row = mysqli_fetch_array($result)){
                     if(getDistance($row['x'],$row['y'],37.296352,126.838889) < $selected ){
-                    
-                    echo    '<div class="card">';
-                    echo        '<div class="header">';
-                    echo             '' . $row['name'] . '';                    
-                    echo         '</div>';
-                    echo         '<div class="block">';
-                    echo             '<div class="total-block">';
-                    echo                 '<div>';
-                    echo                     '<h2>'. $row['total_space'] .'</h2>';
-                    echo                 '</div>';
-                    echo                 '<div>';
-                    echo                     '<h6>전체공간</h6>';
-                    echo                 '</div>';
-                    echo             '</div>';
-                    echo             '<div class="recent-block">';
-                    echo                 '<div>';
-                    echo                     '<h2>'. $row['empty_space'] .'</h2>';
-                    echo                 '</div>';
-                    echo                 '<div>';
-                    echo                     '<h6>남은공간</h6>';
-                    echo                 '</div>';
-                    echo             '</div>';
-                    echo         '</div>';  
-                    echo     '</div>';
-                }
+                        echo    '<div class="card">';
+                        echo        '<div class="header">';
+                        echo             '' . $row['name'] . '';                    
+                        echo         '</div>';
+                        echo         '<div class="block">';
+                        echo             '<div class="total-block">';
+                        echo                 '<div>';
+                        echo                     '<h2>'. $row['total_space'] .'</h2>';
+                        echo                 '</div>';
+                        echo                 '<div>';
+                        echo                     '<h6>전체공간</h6>';
+                        echo                 '</div>';
+                        echo             '</div>';
+                        echo             '<div class="recent-block">';
+                        echo                 '<div>';
+                        echo                     '<h2>'. $row['empty_space'] .'</h2>';
+                        echo                 '</div>';
+                        echo                 '<div>';
+                        echo                     '<h6>남은공간</h6>';
+                        echo                 '</div>';
+                        echo             '</div>';
+                        echo         '</div>';  
+                        echo     '</div>';
+                    }
                     $n++;
                 }
                 // mysqli_close($conn);
@@ -158,7 +157,7 @@
     function displayMarker(locPosition, message) {
         // 현재위치 마커
         var imageSrc = "/img/now.png";
-        var imageSize = new kakao.maps.Size(64, 64);
+        var imageSize = new kakao.maps.Size(50, 50);
         var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize)
 
         // 마커를 생성합니다
@@ -166,7 +165,7 @@
             map: map,
             position: locPosition,
             clickable: true, // 마커를 클릭했을 때 지도의 클릭 이벤트가 발생하지 않도록 설정합니다
-            image: markerImage // 마커 이미지 
+            image: markerImage, // 마커 이미지 
         });
         // 지도 중심좌표를 접속위치로 변경합니다
         map.setCenter(locPosition);
@@ -191,15 +190,18 @@
     ];
     // 마커 이미지 추가 /Red/Green 상황에 따라 변화 예정
     var redimageSrc = '/img/red.png',
-        imageSize = new kakao.maps.Size(65, 65);
+        imageSize = new kakao.maps.Size(65, 65),
+        imageOption = {offset: new kakao.maps.Point(32.5, 32.5)};
     var greenimageSrc = '/img/green.png',
-        imageSize = new kakao.maps.Size(65, 65);
+        imageSize = new kakao.maps.Size(65, 65),
+        imageOption = {offset: new kakao.maps.Point(32.5, 32.5)};
     var grayimageSrc = '/img/gray.png',
-        imageSize = new kakao.maps.Size(65, 65);
+        imageSize = new kakao.maps.Size(65, 65),
+        imageOption = {offset: new kakao.maps.Point(32.5, 32.5)};
 
-    var redmarkerImage = new kakao.maps.MarkerImage(redimageSrc, imageSize);
-    var greenmarkerImage = new kakao.maps.MarkerImage(greenimageSrc, imageSize);
-    var graymarkerImage = new kakao.maps.MarkerImage(grayimageSrc, imageSize);
+    var redmarkerImage = new kakao.maps.MarkerImage(redimageSrc, imageSize, imageOption);
+    var greenmarkerImage = new kakao.maps.MarkerImage(greenimageSrc, imageSize, imageOption);
+    var graymarkerImage = new kakao.maps.MarkerImage(grayimageSrc, imageSize, imageOption);
 
     var getImageByCondition = (x, y, ratio) => {
         if(x > y) return graymarkerImage;
@@ -246,11 +248,31 @@
         kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
         kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
         kakao.maps.event.addListener(marker, 'click', function() {
+            // open('https://map.kakao.com/link/to/'+positions[i].content +',' +  positions[i].latlng['Ma'] + ","+ positions[i].latlng['La']);
             open('https://map.kakao.com/link/to/'+positions[i].content +',' +  positions[i].latlng['Ma'] + ","+ positions[i].latlng['La']);
-  
+
         });  
         // kakao.maps.event.addListener(marker, 'click', showPopup());       
     }
+    // // 테스트
+    // var linePath = [
+    //     new kakao.maps.LatLng(37.2993, 126.838),
+    //     new kakao.maps.LatLng(37.296352,126.838889)
+
+    // ];
+
+    // var polyline = new kakao.maps.Polyline({
+    //     path: linePath,
+    //     strokeWeight: 5,
+    //     strokeColor: '#FFAE00', // 선의 색깔입니다
+    //     strokeOpacity: 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+    //     strokeStyle: 'solid' // 선의 스타일입니다
+    // });
+    // polyline.setMap(map);
+
+    // var distance = polyline.getLength();
+        
+
 
     // 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
     function makeOverListener(map, marker, infowindow) {
