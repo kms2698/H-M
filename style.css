@@ -44,7 +44,7 @@ html,body {
     width: 23%;
 }
 .about {
-    width: 80
+    width: 80%;
 }
 .card{
     margin-top: 15px;
@@ -69,8 +69,8 @@ html,body {
     background-color: #004c92;
     color: #fff;
     height: 100%;
-    padding-top: 35px;
-    padding-bottom: 35px;
+    padding-top: 15px;
+    padding-bottom: 15px;
     font-size: 12pt;
     border-radius: 5px 5px 0px 0px;
     display: flex;
