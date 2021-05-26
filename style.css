@@ -43,9 +43,6 @@ html,body {
 .box3 {
     width: 23%;
 }
-.about {
-    width: 80%;
-}
 .card{
     margin-top: 15px;
     margin-left: 10px;
@@ -64,6 +61,7 @@ html,body {
 }
 .block{
     display: flex;
+    height: 100px;
 }
 .header{
     background-color: #004c92;
@@ -134,4 +132,13 @@ form.button{
     #example_image_large{
         display: none;
     }
+}
+
+/* about.php */
+.about{
+    width: 88%;
+    overflow: auto;
+}
+pre{
+    background-color: #e0e0e0;
 }

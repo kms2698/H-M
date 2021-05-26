@@ -14,19 +14,20 @@
         <div class="box1">
             <div class="title">
                 <!-- <a href="/index.php"> -->
-                <img id="example_image_large" src="/img/title.png" alt="HM" title="HM" , width=100%, height=auto>
-                <img id="example_image_small" src="/img/logo.png" alt="HM" title="HM" , width=100%, height=auto>
-                <!-- </a> -->
+                <a href="index.php", target="_blank">
+                    <img id="example_image_large" src="/img/title.png" alt="HM" title="HM" , width=100%, height=auto>
+                    <img id="example_image_small" src="/img/logo.png" alt="HM" title="HM" , width=100%, height=auto>
+                </a>
                 <!-- 주차장 빈공간 안내 시스템 -->
                 <img id="example_image_large" src="/img/title_name.png" alt="주차장 빈공간 안내 시스템" title="주차장 빈공간 안내 시스템" , width=100%, height=auto>
                 
             </div>
-            <div class="about">
+            <div>
                 <a href="about.php", target="_blank">
                     <img id="example_image_large" src="/img/About_m.png" alt="about" title="About으로 이동" , width=100%, height=auto>
                 </a>
             </div>            
-            <div class="git">
+            <div>
                 <a href="https://github.com/kms2698/H-M", target="_blank">
                     <img id="example_image_large" src="/img/Github_m.png" alt="github" title="Github로 이동" , width=100%, height=auto>
                 </a>
