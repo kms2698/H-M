@@ -8,6 +8,7 @@ box1        box2        box3
 html,body {
     height: 100%;
     margin: 0;
+    font-family: 'twayair';
 }
 .box-container {
     display: flex;
@@ -135,10 +136,17 @@ form.button{
 }
 
 /* about.php */
-.about{
+.box4{
     width: 88%;
+    height: 100%;
     overflow: auto;
+    display: flex;
+    flex-direction: column;
+    padding-left: 40px;
 }
-pre{
-    background-color: #e0e0e0;
+@font-face {
+    font-family: 'twayair';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_tway@1.0/twayair.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
 }

@@ -7,6 +7,7 @@
     <!-- favicon 추가 -->
     <link rel="shortcut icon" href="/img/favicon-32x32.png">
     <link rel="icon" href="/img/favicon-32x32.png">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
 </head>
 
 <body>
@@ -78,7 +79,7 @@
                 while($row = mysqli_fetch_array($result)){
                     if(getDistance($row['x'],$row['y'],37.296352,126.838889) < $selected ){
                         echo    '<div class="card">';
-                        echo        '<div class="header">';
+                        echo        '<div class="header" input = click()>';
                         echo             '' . $row['name'] . '';                    
                         echo         '</div>';
                         echo         '<div class="block">';
@@ -308,6 +309,20 @@
     // 지도 확대 축소 줌 컨트롤을 생성합니다
     var zoomControl = new kakao.maps.ZoomControl();
     map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+
+    $(".header").click(function(){ 
+         
+         var str = ""
+         var tdArr = new Array();   // 배열 선언
+         var checkBtn = $(this);
+         
+         // checkBtn.parent() : checkBtn의 부모는 <td>이다.
+         // checkBtn.parent().parent() : <td>의 부모이므로 <tr>이다.
+         var tr = checkBtn;
+         
+            // console.log("클릭한 Row의 모든 데이터 : "+tr.text());
+            window.open("./img/"+tr.text()+".jpg", "a", "left = 1500px, top = 200px ,width=400, height=300, left=100, top=50");
+      });
 </script>
 
 </body>

@@ -34,16 +34,37 @@
             </div>
         </div>
 
-        <div class="about">
-            <h2>About</h2>
-            <h3>Model</h3>
-            <img src="/img/model.png" alt="모델 레이어" title="모델 레이어" , width=100%, height=auto>
-            사용되는 레이어
-            Convolutional
-            Shortcut
-            Upsample
-            Route
-            Yolo
+        <div class="box4">
+            <div>
+                <p style="font-size:24px">Team : HM</p>
+                <p style="font-size:12px">김민상, 이효원</p>
+                <hr>
+            </div>
+
+            <div>
+                <img src="img/struct.png" alt="구조", width=800px, height=auto>
+                <hr>
+            </div>
+
+            
+            <div>
+                <p style="font-size:24px">Model</p>
+                <img src="https://zeuseyera.github.io/darknet-kr/images/yologo_1.png" alt="yolov3" title="yolov3" , width=100px, height=auto>
+                <p>YOLO</p>
+                <p style="font-size:12px">You Only Look Once의 약자로써, 이미지를 한번 보는 것으로 object의 종류와 위치를 예측</p>
+                <p style="font-size:12px">단일 네트워크를 통해 여러개의 테두리 상자(Bounding Box) 에 대한 객체 확률 계산</p>
+                <br>
+                <p>YOLO 모델의 절차 및 구조</p>
+                <ul style="font-size:12px">a. 이미지를 S*S개의 grid cell로 분할.</ul>
+                <ul style="font-size:12px">b. 각 cell마다 하나의 객체 예측.</ul>
+                <ul style="font-size:12px">c. Bounding Box를 통해 객체 위치 및 크기를 파악.</ul>
+                <hr>
+            </div>
+            <div class="model">
+                <p>모델 구조</p>
+                <img src="/img/model_des.png" alt="모델 레이어" title="모델 레이어" , width=95%, height=auto>
+                <hr>
+            </div>
         </div>
     </div>
 <!-- body 끝 script 시작 -->
