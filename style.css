@@ -43,6 +43,9 @@ html,body {
 .box3 {
     width: 23%;
 }
+.about {
+    width: 80
+}
 .card{
     margin-top: 15px;
     margin-left: 10px;
