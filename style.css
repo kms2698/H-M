@@ -41,6 +41,9 @@ html,body {
     height: 98%;
     box-shadow: 0 1px 11px 0 rgba(0, 0, 0, 0.12);
 }
+.info{
+    font-family: 'Courier New', Courier, monospace;
+}
 .box3 {
     width: 23%;
 }

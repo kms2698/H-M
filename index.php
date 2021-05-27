@@ -149,9 +149,20 @@
                 fillOpacity: 0.7  // 채우기 불투명도 입니다   
             });
 
+            var radius = Math.round(circle.getRadius());
+
+            var radiusOverlay = new kakao.maps.CustomOverlay({
+                content: '<div class="info">' + radius + ' m</div>',
+                position: locPosition,
+                xAnchor: 0.5,
+                yAnchor: -0.5,
+                zIndex: 1
+            });
+
             // 지도에 원을 표시합니다 
             circle.setMap(map);
 
+            radiusOverlay.setMap(map);
         });
 
     } else { // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다 -> 학교 위치로 설정할것임
