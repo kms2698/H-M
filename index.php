@@ -7,84 +7,124 @@
     <!-- favicon 추가 -->
     <link rel="shortcut icon" href="/img/favicon-32x32.png">
     <link rel="icon" href="/img/favicon-32x32.png">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
 </head>
 
 <body>
     <div class="box-container">
         <div class="box1">
             <div class="title">
-                <a href="/test.php">
-                    <img src="/img/title.png" alt="HM" title="HM" , width=100%, height=90px>
+                <!-- <a href="/index.php"> -->
+                <a href="index.php", target="_blank">
+                    <img id="example_image_large" src="/img/title.png" alt="HM" title="HM" , width=100%, height=auto>
+                    <img id="example_image_small" src="/img/logo.png" alt="HM" title="HM" , width=100%, height=auto>
                 </a>
-                주차장 빈공간 안내 시스템
+                <!-- 주차장 빈공간 안내 시스템 -->
+                <img id="example_image_large" src="/img/title_name.png" alt="주차장 빈공간 안내 시스템" title="주차장 빈공간 안내 시스템" , width=100%, height=auto>
+                
             </div>
-            <div class="git">
-                <a href="https://github.com/kms2698/H-M" , target="_blank">
-                    <img src="/img/GitHub-Mark.png" , width=32px, height=32px>
+            <div>
+                <a href="about.php", target="_blank">
+                    <img id="example_image_large" src="/img/About_m.png" alt="about" title="About으로 이동" , width=100%, height=auto>
                 </a>
-                Github
+            </div>            
+            <div>
+                <a href="https://github.com/kms2698/H-M", target="_blank">
+                    <img id="example_image_large" src="/img/Github_m.png" alt="github" title="Github로 이동" , width=100%, height=auto>
+                </a>
             </div>
         </div>
+
         <div class="box2">     
             <div id="map"></div>
         </div>
+
         <div class="box3">
-            <?php
-            echo '<input type="checkbox" name="xxx" value="yyy" checked>' ; 
+            <form class="button" name="form" action="" method="post">
+                <select name="radius">
+                    <option value=0.05>반경입력</option>
+                    <option value=0.05>50m</option>
+                    <option value=0.1>100m</option>
+                    <option value=0.25>250m</option>
+                    <option value=0.5>500m</option>
+                    <option value=1>1km</option>
+                </select>
+                <input type="submit" name="submit" value="확인">
+            </form>
             
+            <div class=card_list>
+            <?php
+                $selected = 100;
+                if(isset($_POST['radius'])){
+                    if(!empty($_POST['radius'])) {
+                        $selected = $_POST['radius'];
+                    } else {
+                    }
+                }
+                function getDistance($lat1, $lng1, $lat2, $lng2){
+                    $earth_radius = 6371;
+                    $dLat = deg2rad($lat2 - $lat1);
+                    $dLon = deg2rad($lng2 - $lng1);
+                    $a = sin($dLat/2) * sin($dLat/2) + cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * sin($dLon/2) * sin($dLon/2);
+                    $c = 2 * asin(sqrt($a));
+                    $d = $earth_radius * $c;
+                    return $d;
+                }
                 $conn = mysqli_connect("localhost","root",1234,'hm');
                 if (mysqli_connect_errno()){
                     echo "연결실패" . mysqli_connect_error();
                 }
                 $result = mysqli_query($conn,"SELECT * FROM parkinglot");
-                $n = 1;
+                $n = 0;
                 while($row = mysqli_fetch_array($result)){
-                    # 여기에서 현재 좌표랑 지금 받아오는 좌표랑 거리계산을해서 밑에 이프문에서 걸러주면 되겠네 
-                    // if($n > 3){
-                    //     $xx = '<script>document.write (locPosition);</script>';
-                    //     echo $xx;
-                    // }
-                    echo '<div class="card">';
-                    echo     '<div class="header">';
-                    echo         '<h2>' . $row['name'] . '</h2>';
-                    echo     '</div>';
-                    echo     '<div class="block">';
-                    echo         '<div class="total-block">';
-                    echo             '<div>';
-                    echo                 '<h2>'. $row['total_space'] .'</h2>';
-                    echo             '</div>';
-                    echo             '<div>';
-                    echo                 '<h5>전체공간</h5>';
-                    echo             '</div>';
-                    echo         '</div>';
-                    echo         '<div class="recent-block">';
-                    echo             '<div>';
-                    echo                 '<h2>'. $row['blank_space'] .'</h2>';
-                    echo             '</div>';
-                    echo             '<div>';
-                    echo                 '<h5>남은공간</h5>';
-                    echo             '</div>';
-                    echo         '</div>';
-                    echo     '</div>';  
-                    echo '</div>';
-                    $n++;
+                    if(getDistance($row['x'],$row['y'],37.296352,126.838889) < $selected ){
+                        echo    '<div class="card">';
+                        echo        '<div class="header" input = click()>';
+                        echo             '' . $row['name'] . '';                    
+                        echo         '</div>';
+                        echo         '<div class="block">';
+                        echo             '<div class="total-block">';
+                        echo                 '<div>';
+                        echo                     '<h2>'. $row['total_space'] .'</h2>';
+                        echo                 '</div>';
+                        echo                 '<div>';
+                        echo                     '<h6>전체공간</h6>';
+                        echo                 '</div>';
+                        echo             '</div>';
+                        echo             '<div class="recent-block">';
+                        echo                 '<div>';
+                        echo                     '<h2>'. $row['empty_space'] .'</h2>';
+                        echo                 '</div>';
+                        echo                 '<div>';
+                        echo                     '<h6>남은공간</h6>';
+                        echo                 '</div>';
+                        echo             '</div>';
+                        echo         '</div>';  
+                        echo     '</div>';
+                        $n++;
+                    }
                 }
-            mysqli_close($conn);
-            ?>
-            
-            
+                if ($n == 0){
+                    
+                    echo        '<div class="null">';
+                    echo            '<h4>선택하신 영역 내에 주차장이 없습니다.</h4>';                   
+                    echo        '</div>';
+                }
+                // mysqli_close($conn);
+                ?>
+            </div>
         </div>
     </div>
 <!-- body 끝 script 시작 -->
 <!-- 민상 api -->
-<!--<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8a22c92620ce18ced038eefd01097d13"></script>-->
+<!-- <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8a22c92620ce18ced038eefd01097d13"></script> -->
 <!-- 효원 api -->
-            <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2ce674d31d7a0ac54f9b679b2e14b77b"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2ce674d31d7a0ac54f9b679b2e14b77b"></script>
 <script>
     var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
         mapOption = {
-            center: new kakao.maps.LatLng(37.247577819457305, 127.0157852181996), // 지도의 중심좌표 (집으로 설정함)
-            level: 1 // 지도확대레벨
+            center: new kakao.maps.LatLng(37.296352, 126.838889), // 지도의 중심좌표 (집으로 설정함)
+            level: 3 // 지도확대레벨
         };
 
     // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
@@ -97,20 +137,16 @@
         // GeoLocation을 이용해서 접속 위치를 얻어옵니다
         navigator.geolocation.getCurrentPosition(function (position) {
 
-            var lat = position.coords.latitude, // 위도
-                lon = position.coords.longitude; // 경도
+            var lat = 37.296352, lon = 126.838889; // 위도 경도
             var locPosition = new kakao.maps.LatLng(lat, lon); // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
             
             
             // 마커와 인포윈도우를 표시합니다
             displayMarker(locPosition, message);
-            <?php
-            $value = 200;
-            ?>
             var circle = new kakao.maps.Circle({
 
                 center: new kakao.maps.LatLng(lat, lon),  // 원의 중심좌표 입니다 
-                radius: "<?php echo $value; ?>", // 미터 단위의 원의 반지름입니다 
+                radius: "<?php echo 1000*$selected; ?>", // 미터 단위의 원의 반지름입니다 
                 strokeWeight: 5, // 선의 두께입니다 
                 strokeColor: '#75B8FA', // 선의 색깔입니다
                 strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
@@ -119,23 +155,33 @@
                 fillOpacity: 0.7  // 채우기 불투명도 입니다   
             });
 
+            var radius = Math.round(circle.getRadius());
+
+            var radiusOverlay = new kakao.maps.CustomOverlay({
+                content: '<div class="info">' + radius + ' m</div>',
+                position: locPosition,
+                xAnchor: 0.5,
+                yAnchor: -0.5,
+                zIndex: 1
+            });
+
             // 지도에 원을 표시합니다 
             circle.setMap(map);
 
+            radiusOverlay.setMap(map);
         });
 
     } else { // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다 -> 학교 위치로 설정할것임
-        var locPosition = new kakao.maps.LatLng(33.450701, 126.570667),
+        var locPosition = new kakao.maps.LatLng(37.296352, 126.838889),
             message = 'geolocation을 사용할수 없어요..'
 
         displayMarker(locPosition, message);
     }
 
-
     function displayMarker(locPosition, message) {
         // 현재위치 마커
         var imageSrc = "/img/now.png";
-        var imageSize = new kakao.maps.Size(64, 64);
+        var imageSize = new kakao.maps.Size(50, 50);
         var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize)
 
         // 마커를 생성합니다
@@ -143,134 +189,77 @@
             map: map,
             position: locPosition,
             clickable: true, // 마커를 클릭했을 때 지도의 클릭 이벤트가 발생하지 않도록 설정합니다
-            image: markerImage // 마커 이미지 
+            image: markerImage, // 마커 이미지 
         });
         // 지도 중심좌표를 접속위치로 변경합니다
         map.setCenter(locPosition);
 
     }
     /* ---------------------------------------------------*/
-
-
-
-    // 마커를 표시할 위치와 내용을 가지고 있는 객체 배열입니다
-
-    var positions = [
-        // #0
-        {
-            content: "제 12호 자투리 주차장",
-            latlng: new kakao.maps.LatLng(37.24804865875466, 127.01545563379784),
-        },
-        // #1
-        {
-            content: '<div class="wrap">' +
-                '    <div class="info">' +
-                '        <div class="title">' +
-                '            거주자 우선 주차(유료)' +
-                '        </div>' +
-                '        <div class="body">' +
-                '            <div class="img">' +
-                '                <img src="/img/test.gif" width="200" height="200">' +
-                '           </div>' +
-                '            <div class="title">' +
-                '                <div class="ellipsis">32-951 ~ 32-985 (35대)</div>' +
-                '            </div>' +
-                '        </div>' +
-                '    </div>' +
-                '</div>',
-            latlng: new kakao.maps.LatLng(37.24754865875466, 127.01545563379784),
-        },
-        // #2
-        {
-            content: "미영아파트 주차장",
-            latlng: new kakao.maps.LatLng(37.24754865875466, 127.01458593379784),
-        },
-        // #3
-        {
-            content: "세류 고가 3주차장",
-            latlng: new kakao.maps.LatLng(37.25040007017113, 127.0177019705559),
-        },
-        // #4
-        {
-            content: "거주자 우선 주차(유료)2",
-            latlng: new kakao.maps.LatLng(37.247293986252004, 127.01581615448784),
-        },
-        // #5
-        {
-            content: "거주자 우선 주차(유료)3",
-            latlng: new kakao.maps.LatLng(37.24672403557383, 127.0161118992067),
-        },
-        // 한양대학교 ERICA 주차장 
-        {
-            content: "주차장1",
-            latlng: new kakao.maps.LatLng(37.29426573238396, 126.83147717269108),
-        },
-
-        {
-            content: "주차장2",
-            latlng: new kakao.maps.LatLng(37.296057425273325, 126.83530499416962),
-        },
-
-        {
-            content: "주차장3",
-            latlng: new kakao.maps.LatLng(37.29319370562554, 126.83644184853115),
-        },
-
-        {
-            content: "주차장4",
-            latlng: new kakao.maps.LatLng(37.2972307337403, 126.8383617353502),
-        },
-
-        {
-            content: "주차장5",
-            latlng: new kakao.maps.LatLng(37.2978835512855, 126.83804453707344),
-        },
-
-        {
-            content: "주차장6",
-            latlng: new kakao.maps.LatLng(37.29937902716941, 126.83786650853243),
-        },
-
-        {
-            content: "주차장7",
-            latlng: new kakao.maps.LatLng(37.29654019433495, 126.84244882057581),
-        },
-        // 한양대학교 ERICA 외부 주자창
-        {
-            content: "안산교통정보센터주차장",
-            latlng: new kakao.maps.LatLng(37.29654019433495, 126.84244882057581),
-        },
-        {
-            content: "상록구청주차장",
-            latlng: new kakao.maps.LatLng(37.300250220584346, 126.84587834962909),
-        },
-
-        // 집에서 테스트용
-        // {   
-        //     content: "테스트",
-        //     latlng: new kakao.maps.LatLng(37.44942392756917, 126.68314181506508),
-        // },
-
+    // 마커 위치와 배열
+    let positions = [
+        <?php
+            $result = mysqli_query($conn,"SELECT * FROM parkinglot");
+            $n = 0;
+            while($row = mysqli_fetch_array($result)){
+                echo '{';
+                echo    'content: "' . $row['name'] . '",';
+                echo    'latlng: new kakao.maps.LatLng(' . $row['x'] . ',' . $row['y'] . '),';
+                echo    'ratio: "' . $row['full_space']/$row['total_space']  . '",';
+                echo '},';
+                $n++;
+            }
+            // mysqli_close($conn);    
+        ?>
     ];
     // 마커 이미지 추가 /Red/Green 상황에 따라 변화 예정
-    var imageSrc = '/img/red.png',
-        imageSize = new kakao.maps.Size(65, 65);
+    let grayimageSrc = '/img/gray.png',
+        imageSize = new kakao.maps.Size(65, 65),
+        imageOption = {offset: new kakao.maps.Point(32.5, 32.5)};
+    let greenimageSrc = '/img/green.png';
+    let redimageSrc = '/img/red.png'    
 
-    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
-    ////////////////////////////////////
-    for (var i = 0; i < positions.length; i++) {
+    let redmarkerImage = new kakao.maps.MarkerImage(redimageSrc, imageSize, imageOption);
+    let greenmarkerImage = new kakao.maps.MarkerImage(greenimageSrc, imageSize, imageOption);
+    let graymarkerImage = new kakao.maps.MarkerImage(grayimageSrc, imageSize, imageOption);
+
+    let getImageByCondition = (x, y, ratio) => {
+        if(x > y) return graymarkerImage;
+        else {
+            if(ratio < 0.7){
+                return greenmarkerImage;
+            }
+            else return redmarkerImage;
+        }
+    }
+    function getDistanceFromLatLonInKm(lat1,lng1,lat2,lng2) {
+        function deg2rad(deg) {
+            return deg * (Math.PI/180)
+        }
+
+        var R = 6378137; // Radius of the earth in km
+        var dLat = deg2rad(lat2-lat1);  // deg2rad below
+        var dLon = deg2rad(lng2-lng1);
+        var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.sin(dLon/2) * Math.sin(dLon/2);
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        var d = R * c; // Distance in km
+        return d/1000;
+    }
+
+
+    for (let i = 0; i < positions.length; i++) {
         // 마커를 생성합니다   
         var marker = new kakao.maps.Marker({
             map: map, // 마커를 표시할 지도
             position: positions[i].latlng, // 마커의 위치
             clickable: true, // 마커를 클릭했을 때 지도의 클릭 이벤트가 발생하지 않도록 설정합니다
-            image: markerImage
-
+            image:  getImageByCondition(getDistanceFromLatLonInKm(positions[i].latlng["La"],positions[i].latlng["Ma"],126.838889,37.296352), <?php echo $selected; ?>,positions[i].ratio),
+  
         });
 
         // 마커에 표시할 인포윈도우를 생성합니다 
         var infowindow = new kakao.maps.InfoWindow({
-            content: positions[i].content // 인포윈도우에 표시할 내용
+            content: '<div style="width:150px;text-align:center;font-size:8px;padding-top:4px;">'+positions[i].content+'</div>' // 인포윈도우에 표시할 내용
         });
 
 
@@ -279,16 +268,31 @@
         // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
         kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
         kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
-        // kakao.maps.event.addListener(marker, 'click', function() {
-        //   // 마커 클릭시 특정 웹사이트 열기
-        //   // 이제 여기에 몇번째 마커인지를 이용해서 우리 이미지도 열 수 있을듯
-        //   open("http://t1.daumcdn.net/friends/prod/editor/dc8b3d02-a15a-4afa-a88b-989cf2a50476.jpg");
-
-        // });  
-        kakao.maps.event.addListener(marker, 'click', showPopup());
-
-
+        kakao.maps.event.addListener(marker, 'click', function() {
+            // open('https://map.kakao.com/link/to/'+positions[i].content +',' +  positions[i].latlng['Ma'] + ","+ positions[i].latlng['La']);
+            open('https://map.kakao.com/link/to/'+positions[i].content +',' +  positions[i].latlng['Ma'] + ","+ positions[i].latlng['La']);
+        });  
+        // kakao.maps.event.addListener(marker, 'click', showPopup());       
     }
+    // // 테스트
+    // var linePath = [
+    //     new kakao.maps.LatLng(37.2993, 126.838),
+    //     new kakao.maps.LatLng(37.296352,126.838889)
+
+    // ];
+
+    // var polyline = new kakao.maps.Polyline({
+    //     path: linePath,
+    //     strokeWeight: 5,
+    //     strokeColor: '#FFAE00', // 선의 색깔입니다
+    //     strokeOpacity: 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+    //     strokeStyle: 'solid' // 선의 스타일입니다
+    // });
+    // polyline.setMap(map);
+
+    // var distance = polyline.getLength();
+        
+
 
     // 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
     function makeOverListener(map, marker, infowindow) {
@@ -296,7 +300,6 @@
             infowindow.open(map, marker);
         };
     }
-
     // 인포윈도우를 닫는 클로저를 만드는 함수입니다 
     function makeOutListener(infowindow) {
         return function () {
@@ -310,8 +313,6 @@
         };
 
     }
-
-
     // 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
     var mapTypeControl = new kakao.maps.MapTypeControl();
 
@@ -319,10 +320,23 @@
     // kakao.maps.ControlPosition은 컨트롤이 표시될 위치를 정의하는데 TOPRIGHT는 오른쪽 위를 의미합니다
     map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
 
-    // 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
+    // 지도 확대 축소 줌 컨트롤을 생성합니다
     var zoomControl = new kakao.maps.ZoomControl();
     map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 
+    $(".header").click(function(){ 
+         
+         var str = ""
+         var tdArr = new Array();   // 배열 선언
+         var checkBtn = $(this);
+         
+         // checkBtn.parent() : checkBtn의 부모는 <td>이다.
+         // checkBtn.parent().parent() : <td>의 부모이므로 <tr>이다.
+         var tr = checkBtn;
+         
+            // console.log("클릭한 Row의 모든 데이터 : "+tr.text());
+            window.open("./img/"+tr.text()+".jpg", "a", "left = 1500px, top = 200px ,width=400, height=300, left=100, top=50");
+      });
 </script>
 
 </body>
