@@ -101,8 +101,14 @@
                         echo             '</div>';
                         echo         '</div>';  
                         echo     '</div>';
+                        $n++;
                     }
-                    $n++;
+                }
+                if ($n == 0){
+                    echo        '<div class="null">';
+                    echo            '<p>선택하신 영역 내에 주차장이 없습니다.</p>';
+                    echo            '<p>반경을 넓혀보세요.</p>';                 
+                    echo        '</div>';
                 }
                 // mysqli_close($conn);
                 ?>

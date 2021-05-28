@@ -157,3 +157,6 @@ form.button{
     display: flex;
     flex-direction: row;
 }
+.null{
+    text-align: center;
+}
