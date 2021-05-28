@@ -37,32 +37,77 @@
         <div class="box4">
             <div>
                 <p style="font-size:24px">Team : HM</p>
-                <p style="font-size:12px">김민상, 이효원</p>
+                <p style="font-size:14px">김민상, 이효원</p>
                 <hr>
             </div>
 
             <div>
+                <p style="font-size:24px">Mechanism</p>
                 <img src="img/struct.png" alt="구조", width=800px, height=auto>
                 <hr>
             </div>
 
+            <div>
+                <p style="font-size:24px">Use</p>
+                <div class="use">
+                    <img src="img/use/1_1.png" alt="php", width=100px, height=auto>
+                    <img src="img/use/1_2.png" alt="css", width=100px, height=auto>
+                    <img src="img/use/1_3.png" alt="css", width=100px, height=auto>
+                    <img src="img/use/1_4.png" alt="css", width=100px, height=auto>
+                    <img src="img/use/1_5.png" alt="css", width=100px, height=auto>
+                </div>
+                <hr>
+            </div>
+
+            <div>
+                <p style="font-size:24px">Web</p>
+                <img src="img/trial/1.png" alt="web", width=800px, height=auto>
+                <p style="font-size:14px">초기화면입니다. 왼쪽에는 메뉴, 가운데는 카카오맵이 나타나며, 오른쪽은 반경범위에 위치한 주차장들의 정보들이 나타납니다.</p>
+                <img src="img/trial/2.png" alt="web", width=800px, height=auto>
+                <p style="font-size:14px">오른쪽 상단에는 반경을 바꿀수있는 버튼이 위치합니다. [50m, 100m, 250m, 500m, 1km]</p>
+                <img src="img/trial/3.png" alt="web", width=800px, height=auto>
+                <p style="font-size:14px">표시된 주차장 마커에 마우스를 올려놓으면 해당 주차장의 이름이 나오게되며 클릭시 카카오맵 길찾기 페이지로 이동합니다.</p>
+                <img src="img/trial/4.png" alt="web", width=800px, height=auto>
+                <img src="img/trial/5.png" alt="web", width=800px, height=auto>
+                <p style="font-size:14px">오른쪽 주차장 정보의 표시된 부분 클릭 시 ObjectDetection 모델이 예측한 주차공간의 결과가 팝업으로 나타납니다.</p>
+                <img src="img/trial/6.png" alt="web", width=800px, height=auto>
+                <p style="font-size:14px">반경 변경시 반경 내에 주차장이 없을 경우 아무것도 나타나지 않습니다.</p>
+                <hr>
+            </div>
             
             <div>
                 <p style="font-size:24px">Model</p>
                 <img src="https://zeuseyera.github.io/darknet-kr/images/yologo_1.png" alt="yolov3" title="yolov3" , width=100px, height=auto>
                 <p>YOLO</p>
-                <p style="font-size:12px">You Only Look Once의 약자로써, 이미지를 한번 보는 것으로 object의 종류와 위치를 예측</p>
-                <p style="font-size:12px">단일 네트워크를 통해 여러개의 테두리 상자(Bounding Box) 에 대한 객체 확률 계산</p>
+                <p style="font-size:14px">You Only Look Once의 약자로써, 이미지를 한번 보는 것으로 object의 종류와 위치를 예측</p>
+                <p style="font-size:14px">단일 네트워크를 통해 여러개의 테두리 상자(Bounding Box) 에 대한 객체 확률 계산</p>
                 <br>
-                <p>YOLO 모델의 절차 및 구조</p>
-                <ul style="font-size:12px">a. 이미지를 S*S개의 grid cell로 분할.</ul>
-                <ul style="font-size:12px">b. 각 cell마다 하나의 객체 예측.</ul>
-                <ul style="font-size:12px">c. Bounding Box를 통해 객체 위치 및 크기를 파악.</ul>
+                <p style="font-size:24px">YOLO 모델의 절차 및 구조</p>
+                <ul style="font-size:14px">a. 이미지를 S*S개의 grid cell로 분할.</ul>
+                <ul style="font-size:14px">b. 각 cell마다 하나의 객체 예측.</ul>
+                <ul style="font-size:14px">c. Bounding Box를 통해 객체 위치 및 크기를 파악.</ul>
                 <hr>
             </div>
             <div class="model">
-                <p>모델 구조</p>
+                <p style="font-size:24px">모델 구조</p>
                 <img src="/img/model_des.png" alt="모델 레이어" title="모델 레이어" , width=95%, height=auto>
+                <hr>
+            </div>
+            <div>
+                <p style="font-size:24px">Labeling</p>
+                <div class="use">
+                    <img src="/img/trial/labeling1.png" alt="라벨링", width=400px, height=auto>
+                    <img src="/img/trial/labeling2.png" alt="라벨링", width=400px, height=auto>
+                    <img src="/img/trial/labeling3.png" alt="라벨링결과", width=400px, height=auto>
+                </div>
+                <p style="font-size:14px">Object Detection 을 위한 라벨링은 Yolo_mark 프로그램을 통해 직접 Box를 그려주었습니다.</p>
+                <p style="font-size:14px">라벨링을 완료하면 이미지파일과 동일한 파일명의 txt가 생기고 그 안에는 라벨링한 class와 Bounding Box들의 각 꼭지점의 좌표가 저장됩니다.</p>
+                <hr>
+            </div>
+            <div>
+                <p style="font-size:24px">Learning</p>
+                <img src="/img/trial/learning.png" alt="모델 레이어", width=400px, height=auto>
+                <p style="font-size:14px">학교 GPU서버를 대여받아 학습</p>
                 <hr>
             </div>
         </div>

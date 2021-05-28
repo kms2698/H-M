@@ -153,3 +153,7 @@ form.button{
     font-weight: normal;
     font-style: normal;
 }
+.use{
+    display: flex;
+    flex-direction: row;
+}
