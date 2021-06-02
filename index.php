@@ -338,7 +338,7 @@
          var tr = checkBtn;
          
             // console.log("클릭한 Row의 모든 데이터 : "+tr.text());
-            window.open("./img/"+tr.text()+".jpg", "a", "left = 1500px, top = 200px ,width=400, height=300, left=100, top=50");
+            window.open("./img/"+tr.text()+".jpg", "a", "left = 1500px, top = 200px ,width=1000, height=600, left=250, top=150");
       });
 </script>
 
